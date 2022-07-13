@@ -1,7 +1,14 @@
 <ul>
     {% for task in object_list %}
         <li>{{task.pk}} ....... {{task.title}} ....... {{task.owner}}</li>
+        <a href="{% url 'task-update' pk=task.id%}">
+            <button>Update Task</button></a>
+    
+            <a href="{% url 'task-delete' pk=task.id%}">
+            <button>Delete Task</button></a>
     {% empty %}
         <li>'mpty</li>
     {% endfor %}
-    </ul>
+</ul>
+<a href="{% url 'task-create' %}">
+    <button>Create Task</button></a>
