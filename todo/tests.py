@@ -83,9 +83,60 @@ class UserCreateViewTest(TestCase):
         # Assert
         self.assertInHTML(expected_result, str(result.content))
 
+class UserUpdateViewTest(TestCase):
+    
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse("user-update",args=[1])
+
+    def tearDown(self):
+        pass
+
+    def test_update_user_submit_btn(self):
+        # Arrange
+        User.objects.create(
+            id=1,
+            is_active=True,
+            email="test@test.com",
+            password="password123"
+        )
+
+        expected_result = "<input type=\"submit\" value=\"Submit\">"
+
+        # Act
+        result = self.client.get(self.url)
+
+        # Assert
+        self.assertInHTML(expected_result, str(result.content))
+
+class UserDeleteViewTest(TestCase):
+    
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse("user-delete",args=[1])
+
+    def tearDown(self):
+        pass
+
+    def test_delete_user_submit_btn(self):
+        # Arrange
+        User.objects.create(
+            id=1,
+            is_active=True,
+            email="test@test.com",
+            password="password123"
+        )
+
+        expected_result = "<input type=\"submit\" value=\"Ano\">"
+
+        # Act
+        result = self.client.get(self.url)
+
+        # Assert
+        self.assertInHTML(expected_result, str(result.content))
 
 
-#_______TASKS___________________________
+#_____________TASKS_____________________
 
 class TaskCreateViewTest(TestCase):
     
@@ -102,7 +153,7 @@ class TaskCreateViewTest(TestCase):
 
         # Act
         result = self.client.get(self.url)
-        
+
         # Assert
         self.assertInHTML(expected_result, str(result.content))
 
