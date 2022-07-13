@@ -76,8 +76,33 @@ class UserCreateViewTest(TestCase):
     def test_create_user_submit_btn(self):
         # Arrange
         expected_result = "<input type=\"submit\" value=\"Submit\">"
+
         # Act
         result = self.client.get(self.url)
-        # Assert
 
+        # Assert
         self.assertInHTML(expected_result, str(result.content))
+
+
+
+#_______TASKS___________________________
+
+class TaskCreateViewTest(TestCase):
+    
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse("task-create")
+
+    def tearDown(self):
+        pass
+
+    def test_create_task_submit_btn(self):
+        # Arrange
+        expected_result = "<input type=\"submit\" value=\"Submit\">"
+
+        # Act
+        result = self.client.get(self.url)
+        
+        # Assert
+        self.assertInHTML(expected_result, str(result.content))
+
