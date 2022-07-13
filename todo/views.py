@@ -17,25 +17,25 @@ class UserListView(ListView):
         context = super().get_context_data(**kwargs)
         return context
 
-class UserCreate(CreateView):
+class UserCreateView(CreateView):
     model = User
     template_name = 'create_user.html'
     form_class = UserCreateForm
     success_url=reverse_lazy("user-list")
 
-class UserUpdate(UpdateView):
+class UserUpdateView(UpdateView):
     model = User
     template_name = 'update_user.html'
     form_class = UserUpdateForm
     success_url=reverse_lazy("user-list")
 
-class UserDelete(DeleteView):
+class UserDeleteView(DeleteView):
     model = User
     template_name='delete_user.html'
     success_url=reverse_lazy("user-list")
 
 ###TASKS###
-class TaskList(ListView):
+class TaskListView(ListView):
     model = Task
     paginate_by = 15
     template_name = 'task_list.html'
@@ -44,7 +44,7 @@ class TaskList(ListView):
         context = super().get_context_data(**kwargs)
         return context
 
-class TaskCreate(CreateView):
+class TaskCreateView(CreateView):
     model = Task
     fields =[
         'owner',
@@ -54,7 +54,7 @@ class TaskCreate(CreateView):
     template_name = 'create_task.html'
     success_url=reverse_lazy("task-list")
 
-class TaskUpdate(UpdateView):
+class TaskUpdateView(UpdateView):
     model = Task
     fields = [
         'owner',
@@ -64,7 +64,7 @@ class TaskUpdate(UpdateView):
     template_name = 'update_task.html'
     success_url=reverse_lazy("task-list")
 
-class TaskDelete(DeleteView):
+class TaskDeleteView(DeleteView):
     model = Task
     success_url=reverse_lazy("task-list")
     template_name = 'delete_task.html'
