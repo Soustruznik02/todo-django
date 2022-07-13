@@ -10,7 +10,6 @@ from django.urls import reverse_lazy
 ###USERS###
 class UserListView(ListView):
     model = User
-    paginate_by = 15
     template_name = 'user_list.html'
 
     def get_context_data(self, **kwargs):
@@ -33,6 +32,13 @@ class UserDeleteView(DeleteView):
     model = User
     template_name='delete_user.html'
     success_url=reverse_lazy("user-list")
+
+#class UserDetailView(DetailView):
+#    model = User
+
+#   def get_context_data(self, **kwargs):
+#        context = super().get_context_data(**kwargs)
+#        return context
 
 ###TASKS###
 class TaskListView(ListView):

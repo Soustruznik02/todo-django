@@ -1,5 +1,5 @@
 <form method="post">{% csrf_token %}
     <p>Smazat Task?</p>
-    {{ form }}
+    {{ form.as_p }}
     <input type="submit" value="Ano">
 </form>
