@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from .views import UserListView
-from .models import User
+from .models import User, Task
 
 
 class UserListViewTests(TestCase):
@@ -150,6 +150,68 @@ class TaskCreateViewTest(TestCase):
     def test_create_task_submit_btn(self):
         # Arrange
         expected_result = "<input type=\"submit\" value=\"Submit\">"
+
+        # Act
+        result = self.client.get(self.url)
+
+        # Assert
+        self.assertInHTML(expected_result, str(result.content))
+
+class TaskUpdateViewTest(TestCase):
+    
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse("task-update",args=[1])
+
+    def tearDown(self):
+        pass
+
+    def test_update_user_submit_btn(self):
+        # Arrange
+        Task.objects.create(
+            id=1,
+            is_completed=False,
+            owner= User.objects.create(
+                id=1,
+                is_active=True,
+                email="test@test.com",
+                password="password123"
+            ),
+            title="Task1"
+        )
+
+        expected_result = "<input type=\"submit\" value=\"Submit\">"
+
+        # Act
+        result = self.client.get(self.url)
+
+        # Assert
+        self.assertInHTML(expected_result, str(result.content))
+
+class TaskDeleteViewTest(TestCase):
+    
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse("task-delete",args=[1])
+
+    def tearDown(self):
+        pass
+
+    def test_delete_task_submit_btn(self):
+        # Arrange
+        Task.objects.create(
+            id=1,
+            is_completed=False,
+            owner= User.objects.create(
+                id=1,
+                is_active=True,
+                email="test@test.com",
+                password="password123"
+            ),
+            title="Task1"
+        )
+
+        expected_result = "<input type=\"submit\" value=\"Ano\">"
 
         # Act
         result = self.client.get(self.url)
