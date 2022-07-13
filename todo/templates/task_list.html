@@ -1,0 +1,7 @@
+<ul>
+    {% for task in object_list %}
+        <li>{{task.pk}} ....... {{task.title}} ....... {{task.owner}}</li>
+    {% empty %}
+        <li>'mpty</li>
+    {% endfor %}
+    </ul>

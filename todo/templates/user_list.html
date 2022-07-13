@@ -1,0 +1,10 @@
+<ul>
+{% for user in object_list %}
+    <li>{{user.pk}} ....... {{user.email}} 
+        <a href="http://www.google.com/">
+        <button>UwU</button></a>
+    </li>
+{% empty %}
+    <li>'mpty</li>
+{% endfor %}
+</ul>
