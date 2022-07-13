@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 
 
 ###USERS###
-class UserList(ListView):
+class UserListView(ListView):
     model = User
     paginate_by = 15
     template_name = 'user_list.html'
