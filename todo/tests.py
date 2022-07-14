@@ -4,6 +4,7 @@ from .views import UserListView
 from .models import User, Task
 
 
+#USER - VIEWS and TEMPLATES
 class UserListViewTests(TestCase):
 
     def setUp(self):
@@ -135,8 +136,35 @@ class UserDeleteViewTest(TestCase):
         # Assert
         self.assertInHTML(expected_result, str(result.content))
 
+#USER = MODEL
+class UserModelTest(TestCase):
 
-#_____________TASKS_____________________
+    def setUp(self):
+        pass
+
+    def test_email_max_length(self):
+        # Arrange
+        expected_max_length = 254
+
+        # Act
+        max_length = User._meta.get_field('email').max_length
+
+        # Assert
+        self.assertEqual(max_length, expected_max_length)
+
+    def test_password_max_length(self):
+        # Arrange
+        expected_max_length = 50
+
+        # Act
+        max_length = User._meta.get_field('password').max_length
+
+        # Assert
+        self.assertEqual(max_length, expected_max_length)
+
+
+
+#TASK - VIEWS and TEMPLATES
 
 class TaskCreateViewTest(TestCase):
     
@@ -171,7 +199,7 @@ class TaskUpdateViewTest(TestCase):
         Task.objects.create(
             id=1,
             is_completed=False,
-            owner= User.objects.create(
+            owner=User.objects.create(
                 id=1,
                 is_active=True,
                 email="test@test.com",
@@ -202,7 +230,7 @@ class TaskDeleteViewTest(TestCase):
         Task.objects.create(
             id=1,
             is_completed=False,
-            owner= User.objects.create(
+            owner=User.objects.create(
                 id=1,
                 is_active=True,
                 email="test@test.com",
@@ -219,3 +247,12 @@ class TaskDeleteViewTest(TestCase):
         # Assert
         self.assertInHTML(expected_result, str(result.content))
 
+    def test_title_max_length(self):
+        # Arrange
+        expected_result = 70
+
+        # Act
+        max_length = Task._meta.get_field('title').max_length
+
+        # Assert
+        self.assertEqual(max_length, expected_result)
