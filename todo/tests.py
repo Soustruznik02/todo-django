@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from django.urls import reverse
+from django.urls import reverse, resolve
 from django import forms
 from .views import UserListView
 from .models import User, Task
@@ -278,3 +278,23 @@ class UserUpdateFormTest(TestCase):
         result = UserUpdateForm().fields["password"].widget
         # Assert
         self.assertIsInstance(result, forms.PasswordInput)
+
+#URL
+class UrlsTest(TestCase):# user list, task list, user create, task create
+
+    def test_correct_view_assigned(self):
+        # Arrange
+        expected_user_list = 'user-list'
+        expected_task_list = 'task-list'
+        expected_user_create = 'user-create'
+        expected_task_create = 'task-create'
+        # Act
+        user_list = resolve(reverse('user-list'))
+        task_list = resolve(reverse('task-list'))
+        user_create = resolve(reverse('user-create'))
+        task_create = resolve(reverse('task-create'))
+        # Assert
+        self.assertEqual(user_list.view_name, expected_user_list)
+        self.assertEqual(task_list.view_name, expected_task_list)
+        self.assertEqual(user_create.view_name, expected_user_create)
+        self.assertEqual(task_create.view_name, expected_task_create)
