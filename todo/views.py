@@ -33,17 +33,9 @@ class UserDeleteView(DeleteView):
     template_name='delete_user.html'
     success_url=reverse_lazy("user-list")
 
-#class UserDetailView(DetailView):
-#    model = User
-
-#   def get_context_data(self, **kwargs):
-#        context = super().get_context_data(**kwargs)
-#        return context
-
 ###TASKS###
 class TaskListView(ListView):
     model = Task
-    paginate_by = 15
     template_name = 'task_list.html'
 
     def get_context_data(self, **kwargs):

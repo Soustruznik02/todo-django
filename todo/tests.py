@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.urls import reverse, resolve
 from django import forms
-from .views import UserListView
+from .views import UserListView, UserCreateView
 from .models import User, Task
 from .forms import UserCreateForm, UserUpdateForm
 
@@ -85,6 +85,14 @@ class UserCreateViewTest(TestCase):
 
         # Assert
         self.assertInHTML(expected_result, str(result.content))
+
+    def test_create_view_seccess_url(self):
+        # Arrange
+        expected_success_url = '/users'
+        # Acr
+        success_url = UserCreateView.success_url
+        # Assert
+        self.assertEqual(success_url, expected_success_url)
 
 class UserUpdateViewTest(TestCase):
     
