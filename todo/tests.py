@@ -1,7 +1,8 @@
 from django.test import TestCase, Client
 from django.urls import reverse, resolve
 from django import forms
-from .views import UserListView, UserCreateView
+from .views import (
+UserListView, UserCreateView, UserUpdateView, UserDeleteView, TaskListView, TaskCreateView, TaskUpdateView, TaskDeleteView)
 from .models import User, Task
 from .forms import UserCreateForm, UserUpdateForm
 
@@ -119,6 +120,14 @@ class UserUpdateViewTest(TestCase):
         # Assert
         self.assertInHTML(expected_result, str(result.content))
 
+    def test_update_view_seccess_url(self):
+        # Arrange
+        expected_success_url = '/users'
+        # Acr
+        success_url = UserUpdateView.success_url
+        # Assert
+        self.assertEqual(success_url, expected_success_url)
+
 class UserDeleteViewTest(TestCase):
     
     def setUp(self):
@@ -144,6 +153,14 @@ class UserDeleteViewTest(TestCase):
 
         # Assert
         self.assertInHTML(expected_result, str(result.content))
+
+    def test_delete_view_seccess_url(self):
+        # Arrange
+        expected_success_url = '/users'
+        # Acr
+        success_url = UserDeleteView.success_url
+        # Assert
+        self.assertEqual(success_url, expected_success_url)
 
 #USER - MODEL
 class UserModelTest(TestCase):
@@ -191,6 +208,14 @@ class TaskCreateViewTest(TestCase):
         # Assert
         self.assertInHTML(expected_result, str(result.content))
 
+    def test_create_task_seccess_url(self):
+        # Arrange
+        expected_success_url = '/tasks'
+        # Acr
+        success_url = TaskCreateView.success_url
+        # Assert
+        self.assertEqual(success_url, expected_success_url)
+
 class TaskUpdateViewTest(TestCase):
     
     def setUp(self):
@@ -200,7 +225,7 @@ class TaskUpdateViewTest(TestCase):
     def tearDown(self):
         pass
 
-    def test_update_user_submit_btn(self):
+    def test_update_task_submit_btn(self):
         # Arrange
         Task.objects.create(
             id=1,
@@ -221,6 +246,14 @@ class TaskUpdateViewTest(TestCase):
 
         # Assert
         self.assertInHTML(expected_result, str(result.content))
+
+    def test_update_task_seccess_url(self):
+        # Arrange
+        expected_success_url = '/tasks'
+        # Acr
+        success_url = TaskUpdateView.success_url
+        # Assert
+        self.assertEqual(success_url, expected_success_url)
 
 class TaskDeleteViewTest(TestCase):
     
@@ -252,6 +285,14 @@ class TaskDeleteViewTest(TestCase):
 
         # Assert
         self.assertInHTML(expected_result, str(result.content))
+
+    def test_delete_task_seccess_url(self):
+        # Arrange
+        expected_success_url = '/tasks'
+        # Acr
+        success_url = TaskDeleteView.success_url
+        # Assert
+        self.assertEqual(success_url, expected_success_url)
 
 #TASK - MODEL
 class TaskModelTest(TestCase):
