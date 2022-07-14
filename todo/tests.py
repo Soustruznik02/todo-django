@@ -66,7 +66,6 @@ class UserListViewTests(TestCase):
         self.assertInHTML(expected_create_btn_tag, str(result.content))
         self.assertIn(expected_create_url, str(result.content))
 
-
 class UserCreateViewTest(TestCase):
     
     def setUp(self):
@@ -173,7 +172,6 @@ class UserModelTest(TestCase):
         self.assertEqual(max_length, expected_max_length)
 
 #TASK - VIEWS and TEMPLATES
-
 class TaskCreateViewTest(TestCase):
     
     def setUp(self):
@@ -288,21 +286,68 @@ class UserUpdateFormTest(TestCase):
         self.assertIsInstance(result, forms.PasswordInput)
 
 #URL
-class UrlsTest(TestCase):# user list, task list, user create, task create
+class UrlsTest(TestCase):
 
-    def test_correct_view_assigned(self):
+    def test_correct_view_assigned_user_list(self):
         # Arrange
         expected_user_list = 'user-list'
-        expected_task_list = 'task-list'
-        expected_user_create = 'user-create'
-        expected_task_create = 'task-create'
         # Act
         user_list = resolve(reverse('user-list'))
-        task_list = resolve(reverse('task-list'))
-        user_create = resolve(reverse('user-create'))
-        task_create = resolve(reverse('task-create'))
         # Assert
         self.assertEqual(user_list.view_name, expected_user_list)
+        
+    def test_correct_view_assigned_task_list(self):
+        # Arrange
+        expected_task_list = 'task-list'
+        # Act
+        task_list = resolve(reverse('task-list'))
+        # Assert
         self.assertEqual(task_list.view_name, expected_task_list)
+
+    def test_correct_view_assigned_user_create(self):
+        # Arrange
+        expected_user_create = 'user-create'
+        # Act
+        user_create = resolve(reverse('user-create'))
+        # Assert
         self.assertEqual(user_create.view_name, expected_user_create)
+
+    def test_correct_view_assigned_task_create(self):
+        # Arrange
+        expected_task_create = 'task-create'
+        # Act
+        task_create = resolve(reverse('task-create'))
+        # Assert
+        self.assertEqual(task_create.view_name, expected_task_create)
+
+    def test_correct_view_assigned_user_update(self):
+        # Arrange
+        expected_task_create = 'user-update'
+        # Act
+        task_create = resolve(reverse('user-update', args=[1]))
+        # Assert
+        self.assertEqual(task_create.view_name, expected_task_create)
+
+    def test_correct_view_assigned_task_update(self):
+        # Arrange
+        expected_task_create = 'task-update'
+        # Act
+        task_create = resolve(reverse('task-update', args=[1]))
+        # Assert
+        self.assertEqual(task_create.view_name, expected_task_create)
+
+    def test_correct_view_assigned_user_delete(self):
+        # Arrange
+        expected_task_create = 'user-delete'
+        # Act
+        task_create = resolve(reverse('user-delete', args=[1]))
+        # Assert
+        self.assertEqual(task_create.view_name, expected_task_create)
+
+    def test_correct_view_assigned_task_delete(self):
+        # Arrange
+        expected_task_create = 'task-delete'
+        # Act
+        task_create = resolve(reverse('task-delete', args=[1]))
+        # Assert
         self.assertEqual(task_create.view_name, expected_task_create)
