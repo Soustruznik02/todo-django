@@ -94,6 +94,7 @@ class UserCreateViewTest(TestCase):
         # Assert
         self.assertEqual(success_url, expected_success_url)
 
+
 class UserUpdateViewTest(TestCase):
     
     def setUp(self):
@@ -316,6 +317,24 @@ class UserCreateFormTest(TestCase):
         result = UserCreateForm().fields["password"].widget
         # Assert
         self.assertIsInstance(result, forms.PasswordInput)
+
+    
+    def test_email_length_input(self):
+        # Arrange
+        wrong_input = 128*'xo'
+        # Act
+        result = UserCreateForm(data={"email" : wrong_input})
+        # Assert
+        self.assertFalse(result.is_valid())
+        self.assertNotEqual(len(result.errors["email"]), 0 )
+        self.assertEqual(
+            result.errors["email"], 
+            [
+                'Enter a valid email address.', 
+                "Ensure this value has at most 254 characters (it has 256)."
+            ]
+        )
+        print(result.errors["email"], [])
 
 class UserUpdateFormTest(TestCase):
     
