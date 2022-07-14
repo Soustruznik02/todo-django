@@ -1,7 +1,9 @@
 from django.test import TestCase, Client
 from django.urls import reverse
+from django import forms
 from .views import UserListView
 from .models import User, Task
+from .forms import UserCreateForm, UserUpdateForm
 
 
 #USER - VIEWS and TEMPLATES
@@ -136,7 +138,7 @@ class UserDeleteViewTest(TestCase):
         # Assert
         self.assertInHTML(expected_result, str(result.content))
 
-#USER = MODEL
+#USER - MODEL
 class UserModelTest(TestCase):
 
     def setUp(self):
@@ -161,8 +163,6 @@ class UserModelTest(TestCase):
 
         # Assert
         self.assertEqual(max_length, expected_max_length)
-
-
 
 #TASK - VIEWS and TEMPLATES
 
@@ -247,6 +247,9 @@ class TaskDeleteViewTest(TestCase):
         # Assert
         self.assertInHTML(expected_result, str(result.content))
 
+#TASK - MODEL
+class TaskModelTest(TestCase):
+
     def test_title_max_length(self):
         # Arrange
         expected_result = 70
@@ -256,3 +259,22 @@ class TaskDeleteViewTest(TestCase):
 
         # Assert
         self.assertEqual(max_length, expected_result)
+
+#FORM
+class UserCreateFormTest(TestCase):
+    
+    def test_password_widget(self):
+        # Arrange
+        # Act
+        result = UserCreateForm().fields["password"].widget
+        # Assert
+        self.assertIsInstance(result, forms.PasswordInput)
+
+class UserUpdateFormTest(TestCase):
+    
+    def test_password_widget(self):
+        # Arrange
+        # Act
+        result = UserUpdateForm().fields["password"].widget
+        # Assert
+        self.assertIsInstance(result, forms.PasswordInput)
