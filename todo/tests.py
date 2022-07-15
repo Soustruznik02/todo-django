@@ -94,6 +94,14 @@ class UserCreateViewTest(TestCase):
         # Assert
         self.assertEqual(success_url, expected_success_url)
 
+    def test_correct_user_create_form(self):
+        # Arrange
+        expected_form = UserCreateForm
+        # Act
+        form = UserCreateView.form_class
+        # Assert
+        self.assertEqual(form, expected_form)
+
 class UserUpdateViewTest(TestCase):
     
     def setUp(self):
@@ -127,6 +135,14 @@ class UserUpdateViewTest(TestCase):
         success_url = UserUpdateView.success_url
         # Assert
         self.assertEqual(success_url, expected_success_url)
+    
+    def test_correct_user_update_form(self):
+        # Arrange
+        expected_form = UserUpdateForm
+        # Act
+        form = UserUpdateView.form_class
+        # Assert
+        self.assertEqual(form, expected_form)
 
 class UserDeleteViewTest(TestCase):
     
@@ -269,7 +285,7 @@ class TaskCreateViewTest(TestCase):
         # Assert
         self.assertEqual(success_url, expected_success_url)
 
-    def test_title__length_input(self):
+    def test_title_length_input(self):
         # Arrange
         wrong_input = 36*'xo'
         # Acte
@@ -277,14 +293,13 @@ class TaskCreateViewTest(TestCase):
             self.url,
             {'title' : wrong_input}
         )
-        # Assert    
-        #self.assertEqual(result.status_code, 200)
+        # Assert
+        self.assertEqual(result.status_code, 200) # Není nutno
         self.assertContains(
             result, 
             "Ensure this value has at most 70 characters (it has 72).", 
             html=True
         )    
-
 
 class TaskUpdateViewTest(TestCase):
     
