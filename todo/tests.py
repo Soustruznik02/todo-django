@@ -498,6 +498,14 @@ class UserCreateFormTest(TestCase):
             ]
         )
 
+    def test_correct_model(self):
+        # Arrange
+        expected_model = User
+        # Act
+        model = UserCreateForm.Meta.model
+        # Assert
+        self.assertEqual(model, expected_model)
+
 class UserUpdateFormTest(TestCase):
     
     def test_password_widget(self):
@@ -537,6 +545,14 @@ class UserUpdateFormTest(TestCase):
                 "Ensure this value has at most 50 characters (it has 52)."
             ]
         )
+
+    def test_correct_model(self):
+        # Arrange
+        expected_model = User
+        # Act
+        model = UserUpdateForm.Meta.model
+        # Assert
+        self.assertEqual(model, expected_model)
 
 #URL
 class UrlsTest(TestCase):
