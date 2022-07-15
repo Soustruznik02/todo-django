@@ -67,6 +67,14 @@ class UserListViewTests(TestCase):
         self.assertInHTML(expected_create_btn_tag, str(result.content))
         self.assertIn(expected_create_url, str(result.content))
 
+    def test_correct_model(self):
+        # Arrange
+        expected_model = User
+        # Act
+        model = UserListView.model
+        # Assert
+        self.assertEqual(model, expected_model)
+
 class UserCreateViewTest(TestCase):
     
     def setUp(self):
@@ -101,6 +109,14 @@ class UserCreateViewTest(TestCase):
         form = UserCreateView.form_class
         # Assert
         self.assertEqual(form, expected_form)
+    
+    def test_correct_model(self):
+        # Arrange
+        expected_model = User
+        # Act
+        model = UserCreateView.model
+        # Assert
+        self.assertEqual(model, expected_model)
 
 class UserUpdateViewTest(TestCase):
     
@@ -144,6 +160,14 @@ class UserUpdateViewTest(TestCase):
         # Assert
         self.assertEqual(form, expected_form)
 
+    def test_correct_model(self):
+        # Arrange
+        expected_model = User
+        # Act
+        model = UserUpdateView.model
+        # Assert
+        self.assertEqual(model, expected_model)
+
 class UserDeleteViewTest(TestCase):
     
     def setUp(self):
@@ -177,6 +201,14 @@ class UserDeleteViewTest(TestCase):
         success_url = UserDeleteView.success_url
         # Assert
         self.assertEqual(success_url, expected_success_url)
+
+    def test_correct_model(self):
+        # Arrange
+        expected_model = User
+        # Act
+        model = UserDeleteView.model
+        # Assert
+        self.assertEqual(model, expected_model)
 
 #USER - MODEL
 class UserModelTest(TestCase):
@@ -258,6 +290,14 @@ class TaskListViewTest(TestCase):
         self.assertInHTML(expected_create_btn_tag, str(result.content))
         self.assertIn(expected_create_url, str(result.content))
 
+    def test_correct_model(self):
+        # Arrange
+        expected_model = Task
+        # Act
+        model = TaskListView.model
+        # Assert
+        self.assertEqual(model, expected_model)
+
 class TaskCreateViewTest(TestCase):
     
     def setUp(self):
@@ -301,6 +341,14 @@ class TaskCreateViewTest(TestCase):
             html=True
         )    
 
+    def test_correct_model(self):
+        # Arrange
+        expected_model = Task
+        # Act
+        model = TaskCreateView.model
+        # Assert
+        self.assertEqual(model, expected_model)
+
 class TaskUpdateViewTest(TestCase):
     
     def setUp(self):
@@ -340,6 +388,14 @@ class TaskUpdateViewTest(TestCase):
         # Assert
         self.assertEqual(success_url, expected_success_url)
 
+    def test_correct_model(self):
+        # Arrange
+        expected_model = Task
+        # Act
+        model = TaskUpdateView.model
+        # Assert
+        self.assertEqual(model, expected_model)
+
 class TaskDeleteViewTest(TestCase):
     
     def setUp(self):
@@ -378,6 +434,14 @@ class TaskDeleteViewTest(TestCase):
         success_url = TaskDeleteView.success_url
         # Assert
         self.assertEqual(success_url, expected_success_url)
+
+    def test_correct_model(self):
+        # Arrange
+        expected_model = Task
+        # Act
+        model = TaskDeleteView.model
+        # Assert
+        self.assertEqual(model, expected_model)
 
 #TASK - MODEL
 class TaskModelTest(TestCase):
