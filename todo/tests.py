@@ -94,7 +94,6 @@ class UserCreateViewTest(TestCase):
         # Assert
         self.assertEqual(success_url, expected_success_url)
 
-
 class UserUpdateViewTest(TestCase):
     
     def setUp(self):
@@ -190,6 +189,59 @@ class UserModelTest(TestCase):
         self.assertEqual(max_length, expected_max_length)
 
 #TASK - VIEWS and TEMPLATES
+class TaskListViewTest(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse("task-list")
+
+    def test_should_render_text_empty(self):
+        # Arrange
+        expected_result = "<li>empty</li>"
+        expected_status_code = 200
+
+        # Act
+        result = self.client.get(self.url)
+
+        # Assert
+        self.assertContains(
+            result, 
+            expected_result, 
+            1, 
+            expected_status_code
+        )
+        self.assertTemplateUsed(result, "task_list.html")
+        self.assertTrue(list(result.context["object_list"]) == [])
+
+    def test_are_buttons_good(self):
+        # Arrange
+        Task.objects.create(
+            id=1,
+            owner=User.objects.create()
+        )
+        
+        expected_update_btn_tag = "<button>Update Task</button>"
+        expected_update_url = "/tasks/update/1"
+
+        expected_delete_btn_tag = "<button>Delete Task</button>"
+        expected_delete_url = "/tasks/delete/1"
+
+        expected_create_btn_tag = "<button>Create Task</button>"
+        expected_create_url = "/tasks/create"
+
+        # Act
+        result = self.client.get(self.url)
+
+        # Assert
+        self.assertInHTML(expected_update_btn_tag, str(result.content))
+        self.assertIn(expected_update_url, str(result.content))
+
+        self.assertInHTML(expected_delete_btn_tag, str(result.content))
+        self.assertIn(expected_delete_url, str(result.content))
+
+        self.assertInHTML(expected_create_btn_tag, str(result.content))
+        self.assertIn(expected_create_url, str(result.content))
+
 class TaskCreateViewTest(TestCase):
     
     def setUp(self):
@@ -216,6 +268,23 @@ class TaskCreateViewTest(TestCase):
         success_url = TaskCreateView.success_url
         # Assert
         self.assertEqual(success_url, expected_success_url)
+
+    def test_title__length_input(self):
+        # Arrange
+        wrong_input = 36*'xo'
+        # Acte
+        result = self.client.post(
+            self.url,
+            {'title' : wrong_input}
+        )
+        # Assert    
+        #self.assertEqual(result.status_code, 200)
+        self.assertContains(
+            result, 
+            "Ensure this value has at most 70 characters (it has 72).", 
+            html=True
+        )    
+
 
 class TaskUpdateViewTest(TestCase):
     
@@ -334,7 +403,21 @@ class UserCreateFormTest(TestCase):
                 "Ensure this value has at most 254 characters (it has 256)."
             ]
         )
-        print(result.errors["email"], [])
+
+    def test_password_length_input(self):
+        # Arrange
+        wrong_input = 26*'xo'
+        # Act
+        result = UserCreateForm(data={"password" : wrong_input})
+        # Assert
+        self.assertFalse(result.is_valid())
+        self.assertNotEqual(len(result.errors["password"]), 0 )
+        self.assertEqual(
+            result.errors["password"], 
+            [ 
+                "Ensure this value has at most 50 characters (it has 52)."
+            ]
+        )
 
 class UserUpdateFormTest(TestCase):
     
@@ -345,8 +428,40 @@ class UserUpdateFormTest(TestCase):
         # Assert
         self.assertIsInstance(result, forms.PasswordInput)
 
+    def test_email_length_input(self):
+        # Arrange
+        wrong_input = 128*'xo'
+        # Act
+        result = UserUpdateForm(data={"email" : wrong_input})
+        # Assert
+        self.assertFalse(result.is_valid())
+        self.assertNotEqual(len(result.errors["email"]), 0 )
+        self.assertEqual(
+            result.errors["email"], 
+            [
+                'Enter a valid email address.', 
+                "Ensure this value has at most 254 characters (it has 256)."
+            ]
+        )
+
+    def test_password_length_input(self):
+        # Arrange
+        wrong_input = 26*'xo'
+        # Act
+        result = UserUpdateForm(data={"password" : wrong_input})
+        # Assert
+        self.assertFalse(result.is_valid())
+        self.assertNotEqual(len(result.errors["password"]), 0 )
+        self.assertEqual(
+            result.errors["password"], 
+            [ 
+                "Ensure this value has at most 50 characters (it has 52)."
+            ]
+        )
+
 #URL
 class UrlsTest(TestCase):
+
 
     def test_correct_view_assigned_user_list(self):
         # Arrange
